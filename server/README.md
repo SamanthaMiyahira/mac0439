@@ -9,4 +9,5 @@
 ### Versão:
 
 Python   3.12.3
+
 Django   5.2.1
