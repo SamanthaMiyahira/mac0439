@@ -9,15 +9,18 @@
 
 ### INSTALAÇÃO:
 1. Instale as dependências:
-   pip install -r requirements.txt
+
+   `pip install -r requirements.txt`
 
 2. Configure o banco de dados:
-   python manage.py makemigrations
-   python manage.py migrate
+
+   `python manage.py makemigrations`
+   `python manage.py migrate`
 
 ### EXECUÇÃO:
 1. Inicie o servidor Django:
-   python manage.py runserver
+
+   `python manage.py runserver`
 
 2. Acesse no navegador:
    http://localhost:8000
@@ -30,23 +33,29 @@
 ## TESTANDO O MONGODB 
 
 1. Execute o script de teste para popular o banco de dados:
-`python test_script.py`
+
+   `python test_script.py`
 
 1. Verifique se o MongoDB está rodando:
-   mongosh
+
+   `mongosh`
 
 2. Conecte-se ao banco do projeto:
-   use smartpark_nosql
+
+   `use smartpark_nosql`
 
 3. Visualize os eventos cadastrados:
-   db.eventos.find().pretty()
+
+   `db.eventos.find().pretty()`
 
 4. Para sair:
-   exit
+
+   `exit`
 
 ### COMANDOS ÚTEIS:
 - Criar superusuário:
-  python manage.py createsuperuser
+
+  `python manage.py createsuperuser`
   
 
 
