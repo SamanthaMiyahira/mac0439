@@ -42,6 +42,9 @@ Django   5.2.1
 
 ============= TESTANDO O MONGODB =============
 
+1. Execute o script de teste para popular o banco de dados:
+`python test_script.py`
+
 1. Verifique se o MongoDB está rodando:
    mongosh
 
