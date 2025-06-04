@@ -3,8 +3,6 @@
 ## COMO EXECUTAR O PROJETO 
 
 ### PRÉ-REQUISITOS:
-- Python 3.12.3
-- Django 5.2.1
 - MongoDB instalado (baixe em: https://www.mongodb.com/try/download/community)
 
 ### INSTALAÇÃO:
@@ -15,7 +13,7 @@
 2. Configure o banco de dados:
 
    `python manage.py makemigrations`
-   
+
    `python manage.py migrate`
 
 ### EXECUÇÃO:
