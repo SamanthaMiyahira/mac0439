@@ -1,6 +1,6 @@
 # SmartPark - Sistema de Estacionamento
 
-================ COMO EXECUTAR O PROJETO ================
+## COMO EXECUTAR O PROJETO 
 
 ### PRÉ-REQUISITOS:
 - Python 3.12.3
@@ -27,7 +27,7 @@
 - Usuário: admin
 - Senha: admin
 
-============= TESTANDO O MONGODB =============
+## TESTANDO O MONGODB 
 
 1. Execute o script de teste para popular o banco de dados:
 `python test_script.py`
