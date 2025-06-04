@@ -1,0 +1,4 @@
+Django
+pymongo
+djongo
+django-mongodb-engine
