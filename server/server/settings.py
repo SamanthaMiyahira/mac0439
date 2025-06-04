@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api.apps.ApiConfig', 
 ]
 
 MIDDLEWARE = [
@@ -79,6 +80,10 @@ DATABASES = {
     }
 }
 
+MONGO_CONFIG = {
+    'host': 'mongodb://localhost:27017',
+    'dbname': 'smartpark_nosql',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
