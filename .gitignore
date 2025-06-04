@@ -2,4 +2,3 @@ envmac0439/
 /server/api/__pycache__
 /server/api/migrations
 /server/server/__pycache__
-server/db.sqlite3
