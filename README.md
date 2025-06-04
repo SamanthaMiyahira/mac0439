@@ -15,6 +15,7 @@
 2. Configure o banco de dados:
 
    `python manage.py makemigrations`
+   
    `python manage.py migrate`
 
 ### EXECUÇÃO:
