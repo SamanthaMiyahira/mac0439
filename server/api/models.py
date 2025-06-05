@@ -16,9 +16,9 @@ class Usuario(models.Model):
         ('administrador', 'Administrador')
     ]
     
-    cpf = models.CharField(max_length=11, primary_key=True)
+    cpf = models.CharField(max_length=14, primary_key=True)
     nome = models.CharField(max_length=100)
-    tipo_de_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_CHOICES)
+    tipo = models.CharField(max_length=20, choices=TIPO_USUARIO_CHOICES)
     email = models.EmailField(unique=True)
     prioridade = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True)
     foto = models.URLField(max_length=500, validators=[validate_url], null=True, blank=True)
@@ -34,10 +34,10 @@ class Veiculo(models.Model):
         ('eletrico', 'Elétrico')
     ]
     
-    placa = models.CharField(max_length=10, unique=True)
+    placa = models.CharField(max_length=10, primary_key=True)
     modelo = models.CharField(max_length=50)
     marca = models.CharField(max_length=50)
-    tipo_de_veiculo = models.CharField(max_length=30, choices=TIPO_VEICULO_CHOICES)
+    tipo = models.CharField(max_length=30, choices=TIPO_VEICULO_CHOICES)
     imagem_placa = models.URLField(max_length=500, validators=[validate_url], null=True, blank=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
@@ -56,7 +56,7 @@ class Vaga(models.Model):
     ]
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    tipo_de_vaga = models.CharField(max_length=20, choices=TIPO_VAGA_CHOICES)
+    tipo = models.CharField(max_length=20, choices=TIPO_VAGA_CHOICES)
     localizacao = models.CharField(max_length=20, null=True, blank=True)
 
 class Credencial(models.Model):
@@ -72,7 +72,7 @@ class Credencial(models.Model):
     qrcode = models.URLField(max_length=500, validators=[validate_url])
 
 class Reserva(models.Model):
-    TIPO_RESERVA_CHOICES = [
+    tipo_CHOICES = [
         ('eventual', 'Eventual'),
         ('recorrente', 'Recorrente')
     ]
@@ -80,7 +80,7 @@ class Reserva(models.Model):
     data_hora_entrada = models.DateTimeField()
     data_hora_saida = models.DateTimeField(null=True, blank=True)
     periodo = models.DurationField()
-    tipo_reserva = models.CharField(max_length=20, choices=TIPO_RESERVA_CHOICES)
+    tipo = models.CharField(max_length=20, choices=tipo_CHOICES)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     veiculo = models.ForeignKey(Veiculo, on_delete=models.SET_NULL, null=True, blank=True)
     vaga = models.ForeignKey(Vaga, on_delete=models.SET_NULL, null=True, blank=True)
@@ -113,7 +113,7 @@ class Notificacao(models.Model):
         ('incidente', 'Incidente')
     ]
     
-    tipo_notificacao = models.CharField(max_length=50, choices=TIPO_CHOICES)
+    tipo = models.CharField(max_length=50, choices=TIPO_CHOICES)
     mensagem = models.TextField()
     data_hora = models.DateTimeField()
     usuario = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True)
