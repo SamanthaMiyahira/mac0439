@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .mongo_utils import criar_evento
+from .utils.mongo_utils import criar_evento
 
 # NOSQL (MongoDB)
 

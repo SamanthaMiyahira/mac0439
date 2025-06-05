@@ -34,7 +34,7 @@
 
 1. Execute o script de teste para popular o banco de dados:
 
-   `python test_script.py`
+   `python manage.py test api`
 
 1. Verifique se o MongoDB está rodando:
 

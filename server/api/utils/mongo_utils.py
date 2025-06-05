@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from django.conf import settings
 from bson import ObjectId
 from datetime import datetime
+from ..models import Usuario, Veiculo
 
 def get_mongo_db():
     client = MongoClient(settings.MONGO_CONFIG['host'])
@@ -13,7 +14,6 @@ def criar_evento(titulo, responsavel_cpf, vagas_reservadas):
     db = get_mongo_db()
     
     # Busca dados do responsável no PostgreSQL
-    from .models import Usuario
     try:
         responsavel = Usuario.objects.get(cpf=responsavel_cpf)
     except Usuario.DoesNotExist:
@@ -41,7 +41,6 @@ def adicionar_participante(evento_id, cpf, placa_veiculo):
     db = get_mongo_db()
     
     # Verifica se usuário e veículo existem no PostgreSQL
-    from .models import Usuario, Veiculo
     try:
         participante = Usuario.objects.get(cpf=cpf)
         veiculo = Veiculo.objects.get(placa=placa_veiculo)

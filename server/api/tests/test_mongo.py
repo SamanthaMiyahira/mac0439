@@ -4,8 +4,9 @@ from bson import ObjectId
 from datetime import datetime
 from unittest import mock
 
-from .models import Usuario, Vaga
-from . import mongo_utils
+from api.models import Usuario, Vaga
+# from ..models import Usuario, Vaga
+from ..utils import mongo_utils
 
 class CriarEventoTestCase(TestCase):
     def setUp(self):
