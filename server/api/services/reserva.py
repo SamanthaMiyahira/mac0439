@@ -1,8 +1,7 @@
-# app/services/reserva_service.py
-
 from datetime import timedelta
 from django.utils import timezone
 from api.models import Reserva, Credencial, Notificacao, FilaDeEspera, Vaga
+from .recibo import criar_recibo
 
 def criar_reserva(usuario, veiculo, periodo, tipo):
     entrada = None 
@@ -48,6 +47,28 @@ def criar_reserva(usuario, veiculo, periodo, tipo):
             usuario=usuario,
             reserva=reserva
         )
+
+        # Cria recibo se for visitante
+        if getattr(usuario, "tipo", "").lower() == "visitante":
+            VALOR_POR_HORA = 12.95 
+            horas = periodo.total_seconds() / 3600
+            valor = round(VALOR_POR_HORA * horas, 2)
+
+            criar_recibo(
+                valor=valor,
+                data_hora=timezone.now().isoformat(),
+                status="pendente",
+                metodo_pagamento=None,
+                data_pagamento=None,
+                visitante={
+                    "cpf": usuario.cpf,
+                    "nome": usuario.nome,
+                    "veiculo_placa": veiculo.placa
+                },
+                responsavel_emissor="sistema_automatico",
+                evento=(tipo.lower() == "eventual")
+            )
+
         return reserva
     else:
         FilaDeEspera.objects.create(

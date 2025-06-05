@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from api.views.evento import criar_evento_view
 from api.views.reserva import criar_reserva_view, confirmar_entrada_view, confirmar_saida_view
+from api.views.recibo import listar_recibos_pendentes_view, pagar_recibo_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('api/confirmar-entrada/', confirmar_entrada_view, name='confirmar_entrada'),
     path('api/confirmar-saida/', confirmar_saida_view, name='confirmar_saida'),
     path('api/criar-evento/', criar_evento_view, name='criar_evento'),
-
+    path('api/recibos/pendentes/<str:cpf>/', listar_recibos_pendentes_view, name='listar_recibos_pendentes'),
+    path('api/recibos/pagar/', pagar_recibo_view, name='pagar_recibo'),
 ]

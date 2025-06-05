@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from ..services.evento import criar_evento, listar_eventos, detalhar_evento
+from ..services.evento import criar_evento
 from ..serializers.evento import EventoSerializer
 
 @api_view(['POST'])

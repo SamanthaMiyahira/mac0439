@@ -9,8 +9,7 @@ import requests
 url = "http://localhost:8000/api/criar-reserva/"
 
 data = {
-    "cpf": "777.888.999-00",             
-    "placa": "YZA5B67",                  
+    "cpf": "444.555.666-77",  #visitante                           
     "tipo": "recorrente",                     
     "periodo": "01:00:00"                   
 }

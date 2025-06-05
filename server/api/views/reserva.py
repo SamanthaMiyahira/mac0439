@@ -12,11 +12,12 @@ def criar_reserva_view(request):
     if serializer.is_valid():
         try:
             usuario = Usuario.objects.get(cpf=serializer.validated_data['cpf'])
-            veiculo = Veiculo.objects.get(placa=serializer.validated_data['placa'], usuario=usuario)
         except Usuario.DoesNotExist:
             return Response({'erro': 'Usuário não encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        except Veiculo.DoesNotExist:
-            return Response({'erro': 'Veículo não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        veiculo = Veiculo.objects.filter(usuario=usuario).first()
+        if not veiculo:
+            return Response({'erro': 'Veículo não encontrado para este usuário'}, status=status.HTTP_404_NOT_FOUND)
 
         periodo = serializer.validated_data.get('periodo')
         tipo = serializer.validated_data.get('tipo')
