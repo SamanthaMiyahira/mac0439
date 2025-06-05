@@ -1,21 +1,21 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 from ..services.evento import criar_evento, listar_eventos, detalhar_evento
+from ..serializers.evento import EventoSerializer
 
 @api_view(['POST'])
 def criar_evento_view(request):
-    data = request.data
-    evento_id = criar_evento(data['titulo'], data['responsavel_cpf'], data['vagas_reservadas'])
+    serializer = EventoSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    dados = serializer.validated_data
+    evento_id = criar_evento(
+        dados['titulo'],
+        dados['responsavel_cpf'],
+        dados['vagas_reservadas'],
+        dados['data_hora'],
+        dados.get('participantes', [])
+    )
     return Response({"evento_id": evento_id})
-
-@api_view(['GET'])
-def listar_eventos_view(request):
-    status = request.GET.get("status")
-    eventos = listar_eventos(status)
-    return Response(eventos)
-
-@api_view(['GET'])
-def detalhar_evento_view(request, evento_id):
-    evento = detalhar_evento(evento_id)
-    return Response(evento)
-
