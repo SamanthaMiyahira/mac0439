@@ -70,6 +70,14 @@ O script para se comunicar com essa API está em `scripts/criar_reserva.py`.
 
 Este script é útil para testar manualmente o funcionamento da API de reservas sem precisar usar uma interface gráfica ou ferramenta como Postman.
 
+#### Confirmação da entrada
+
+A API para confirmar a entrada está em: `http://localhost:8000/api/confirmar-entrada/.`
+
+O script para se comunicar com essa API está em `scripts/confirmar_entrada.py`.
+
+Este script permite testar a confirmação da entrada da reserva, enviando os dados do QR code da credencial e a placa do veículo. Caso a credencial não esteja ativa ou esteja bloqueada, a confirmação não será realizada.
+
 ### COMANDOS ÚTEIS:
 - Criar superusuário:
 

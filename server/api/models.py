@@ -76,6 +76,11 @@ class Reserva(models.Model):
         ('eventual', 'Eventual'),
         ('recorrente', 'Recorrente')
     ]
+
+    STATUS_CHOICES = [
+        ('ativa', 'Ativa'),
+        ('concluida', 'Concluída'),
+    ]
     
     data_hora_entrada = models.DateTimeField(null=True, blank=True)
     data_hora_saida = models.DateTimeField(null=True, blank=True)
@@ -85,6 +90,7 @@ class Reserva(models.Model):
     veiculo = models.ForeignKey(Veiculo, on_delete=models.SET_NULL, null=True)
     vaga = models.ForeignKey(Vaga, on_delete=models.SET_NULL, null=True, blank=True)
     credencial = models.ForeignKey(Credencial, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativa')
 
 class FilaDeEspera(models.Model):
     STATUS_CHOICES = [
