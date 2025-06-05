@@ -73,6 +73,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# conexao com o banco postgresql
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -84,6 +85,7 @@ DATABASES = {
     }
 }
 
+# conexao com o banco mongodb 
 MONGO_CONFIG = {
     'host': 'mongodb://localhost:27017',
     'dbname': 'smartpark_nosql',
