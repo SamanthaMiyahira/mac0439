@@ -18,9 +18,10 @@ def main():
         cursor = conn.cursor()
 
         arquivos_populate = [
-            'populate_usuario.sql',
-            # 'populate_evento.sql',
-            # 'populate_outro.sql',
+            'usuario.sql',
+            'funcionario.sql',
+            'veiculo.sql',
+            'vaga.sql',
         ]
 
         for arquivo in arquivos_populate:

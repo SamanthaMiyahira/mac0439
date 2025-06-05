@@ -56,7 +56,7 @@
 
 Os arquivos SQL de INSERT estão na pasta `\server\scripts`. Execute o comando 
 
-`python scripts/execute_populate.py` 
+`python scripts/populate.py` 
 
 para popular o banco de dados PostgreSQL. O script já trata possíveis duplicações evitando erros ao inserir registros existentes.
 

@@ -57,7 +57,7 @@ class Vaga(models.Model):
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     tipo = models.CharField(max_length=20, choices=TIPO_VAGA_CHOICES)
-    localizacao = models.CharField(max_length=20, null=True, blank=True)
+    localizacao = models.CharField(max_length=20, primary_key=True)
 
 class Credencial(models.Model):
     STATUS_CHOICES = [
@@ -82,7 +82,7 @@ class Reserva(models.Model):
     periodo = models.DurationField()
     tipo = models.CharField(max_length=20, choices=tipo_CHOICES)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    veiculo = models.ForeignKey(Veiculo, on_delete=models.SET_NULL, null=True, blank=True)
+    veiculo = models.ForeignKey(Veiculo, on_delete=models.SET_NULL, null=True)
     vaga = models.ForeignKey(Vaga, on_delete=models.SET_NULL, null=True, blank=True)
     credencial = models.ForeignKey(Credencial, on_delete=models.SET_NULL, null=True, blank=True)
 
