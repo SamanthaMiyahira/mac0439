@@ -4,6 +4,7 @@
 
 ### PRÉ-REQUISITOS:
 - MongoDB instalado (baixe em: https://www.mongodb.com/try/download/community)
+- Postgres instalado (https://www.postgresql.org/download/)
 
 ### INSTALAÇÃO:
 1. Instale as dependências:
@@ -56,7 +57,6 @@
 
   `python manage.py createsuperuser`
   
-
 
 
 
