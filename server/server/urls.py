@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from server.api.views.evento import criar_evento_view, listar_eventos_view, detalhar_evento_view
-from server.api.views.evento import criar_reserva_view
+from api.views.evento import criar_evento_view, listar_eventos_view, detalhar_evento_view
+from api.views.reserva import criar_reserva_view, confirmar_entrada_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('eventos/', criar_evento_view, name='criar_evento'),
     path('eventos/listar/', listar_eventos_view, name='listar_eventos'),
     path('eventos/<str:evento_id>/', detalhar_evento_view, name='detalhar_evento'),
-    path('api/criar-reserva/', criar_reserva_view, name='criar_reserva')
+    path('api/criar-reserva/', criar_reserva_view, name='criar_reserva'),
+    path('api/confirmar-entrada/', confirmar_entrada_view, name='confirmar_entrada'),
 ]

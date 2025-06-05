@@ -2,9 +2,6 @@
 Este script envia uma requisição HTTP POST para a API do Django
 no endpoint 'http://localhost:8000/api/criar-reserva/' para criar
 uma nova reserva de vaga de estacionamento.
-
-Este script é útil para testar manualmente o funcionamento da API de reservas
-sem precisar usar uma interface gráfica ou ferramenta como Postman.
 """
 
 import requests

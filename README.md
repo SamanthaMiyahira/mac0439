@@ -60,6 +60,16 @@ Os arquivos SQL de INSERT estão na pasta `\server\scripts`. Execute o comando
 
 para popular o banco de dados PostgreSQL. O script já trata possíveis duplicações evitando erros ao inserir registros existentes.
 
+### TESTAR A API
+
+#### Criação da reserva
+
+A API de criar reserva está em: `http://localhost:8000/api/criar-reserva/`.
+
+O script para se comunicar com essa API está em `scripts/criar_reserva.py`.
+
+Este script é útil para testar manualmente o funcionamento da API de reservas sem precisar usar uma interface gráfica ou ferramenta como Postman.
+
 ### COMANDOS ÚTEIS:
 - Criar superusuário:
 

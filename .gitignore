@@ -4,3 +4,6 @@ envmac0439/
 /server/server/__pycache__
 /server/api/tests/__pycache__
 /server/api/utils/__pycache__
+/server/api/serializers/__pycache__
+/server/api/services/__pycache__
+/server/api/views/__pycache__
