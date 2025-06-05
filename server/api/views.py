@@ -1,23 +1,20 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from .utils.mongo_utils import criar_evento
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .services.evento_service import criar_evento, listar_eventos, detalhar_evento
 
-# NOSQL (MongoDB)
-
+@api_view(['POST'])
 def criar_evento_view(request):
-    if request.method == 'POST':
-        # Exemplo de dados (na prática, viria do request.POST/request.body)
-        vagas_reservadas = [
-            {"id_vaga": "A12", "tipo": "preferencial"},
-            {"id_vaga": "B05", "tipo": "comum"}
-        ]
-        
-        try:
-            evento_id = criar_evento(
-                titulo="Reunião Mensal",
-                responsavel_cpf="123.456.789-00",
-                vagas_reservadas=vagas_reservadas
-            )
-            return JsonResponse({"status": "success", "evento_id": evento_id})
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    data = request.data
+    evento_id = criar_evento(data['titulo'], data['responsavel_cpf'], data['vagas_reservadas'])
+    return Response({"evento_id": evento_id})
+
+@api_view(['GET'])
+def listar_eventos_view(request):
+    status = request.GET.get("status")
+    eventos = listar_eventos(status)
+    return Response(eventos)
+
+@api_view(['GET'])
+def detalhar_evento_view(request, evento_id):
+    evento = detalhar_evento(evento_id)
+    return Response(evento)

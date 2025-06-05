@@ -52,6 +52,14 @@
 
    `exit`
 
+### POPULAR O BANCO DE DADOS
+
+Os arquivos SQL de INSERT estão na pasta `\server\scripts`. Execute o comando 
+
+`python scripts/execute_populate.py` 
+
+para popular o banco de dados PostgreSQL. O script já trata possíveis duplicações evitando erros ao inserir registros existentes.
+
 ### COMANDOS ÚTEIS:
 - Criar superusuário:
 
