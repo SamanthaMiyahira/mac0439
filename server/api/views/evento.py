@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .services.evento_service import criar_evento, listar_eventos, detalhar_evento
+from ..services.evento import criar_evento, listar_eventos, detalhar_evento
 
 @api_view(['POST'])
 def criar_evento_view(request):
@@ -18,3 +18,4 @@ def listar_eventos_view(request):
 def detalhar_evento_view(request, evento_id):
     evento = detalhar_evento(evento_id)
     return Response(evento)
+

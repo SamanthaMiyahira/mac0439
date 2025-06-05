@@ -67,7 +67,7 @@ class Credencial(models.Model):
     ]
     
     data_emissao = models.DateTimeField()
-    data_expiracao = models.DateTimeField()
+    data_expiracao = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     qrcode = models.URLField(max_length=500, validators=[validate_url])
 
@@ -77,7 +77,7 @@ class Reserva(models.Model):
         ('recorrente', 'Recorrente')
     ]
     
-    data_hora_entrada = models.DateTimeField()
+    data_hora_entrada = models.DateTimeField(null=True, blank=True)
     data_hora_saida = models.DateTimeField(null=True, blank=True)
     periodo = models.DurationField()
     tipo = models.CharField(max_length=20, choices=tipo_CHOICES)
