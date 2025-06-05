@@ -19,10 +19,10 @@ def criar_reserva_view(request):
         if not veiculo:
             return Response({'erro': 'Veículo não encontrado para este usuário'}, status=status.HTTP_404_NOT_FOUND)
 
-        periodo = serializer.validated_data.get('periodo')
+        data = serializer.validated_data.get('data')
         tipo = serializer.validated_data.get('tipo')
 
-        reserva = criar_reserva(usuario=usuario, veiculo=veiculo, periodo=periodo, tipo=tipo)
+        reserva = criar_reserva(usuario=usuario, veiculo=veiculo, data=data, tipo=tipo)
         if reserva:
             return Response({'mensagem': 'Reserva criada com sucesso', 'id_reserva': reserva.id}, status=status.HTTP_201_CREATED)
         else:
@@ -43,8 +43,11 @@ def confirmar_entrada_view(request):
             return Response({'erro': 'Placa não corresponde à credencial.'}, status=status.HTTP_400_BAD_REQUEST)
 
         agora = timezone.now()
+        if reserva.data_hora_entrada is None or reserva.data_hora_entrada.date() != agora.date():
+            return Response({'erro': 'A entrada só pode ser confirmada no dia da reserva.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        agora = timezone.now()
         reserva.data_hora_entrada = agora
-        reserva.data_hora_saida = agora + reserva.periodo
         reserva.save()
 
         vaga = reserva.vaga

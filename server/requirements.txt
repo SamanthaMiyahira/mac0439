@@ -4,3 +4,4 @@ djongo
 django-mongodb-engine
 djangorestframework
 requests
+djangorestframework

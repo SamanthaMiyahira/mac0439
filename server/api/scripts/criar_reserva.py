@@ -8,10 +8,11 @@ import requests
 
 url = "http://localhost:8000/api/criar-reserva/"
 
+#visitante
 data = {
-    "cpf": "444.555.666-77",  #visitante                           
+    "cpf": "444.555.666-77",                             
     "tipo": "recorrente",                     
-    "periodo": "01:00:00"                   
+    "data": "2025-06-06"                   
 }
 
 response = requests.post(url, json=data)
