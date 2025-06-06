@@ -4,7 +4,7 @@
 
 ### PRÉ-REQUISITOS:
 - MongoDB instalado (baixe em: https://www.mongodb.com/try/download/community)
-- Postgres instalado (https://www.postgresql.org/download/)
+- PostgreSQL instalado (https://www.postgresql.org/download/)
 
 ### INSTALAÇÃO:
 1. Instale as dependências:
@@ -26,6 +26,7 @@
    http://localhost:8000
 
 ### ACESSO ADMIN:
+- Crie um super usuário para acessar a página de admin: `python manage.py createsuperuser`
 - URL: http://localhost:8000/admin
 - Usuário: admin
 - Senha: admin
@@ -56,8 +57,7 @@ Contém os serializers do Django REST Framework, responsáveis por converter os 
 
 `services/`
 
-Camada onde ficam as funções principais da aplicação, como criar_reserva, criar_evento, e outras lógicas de negócio. Essas funções manipulam os dados e interagem com os modelos.
-
+Camada onde ficam as funções principais da aplicação, como criar_reserva, criar_evento, e outras lógicas. Essas funções manipulam os dados e interagem com os modelos.
 
 `tests/`
 
@@ -77,10 +77,6 @@ Contém scripts SQL usados para popular o banco de dados PostgreSQL com dados in
 
 ## TESTANDO O MONGODB 
 
-1. Execute o script de teste para popular o banco de dados:
-
-   `python manage.py test api`
-
 1. Verifique se o MongoDB está rodando:
 
    `mongosh`
@@ -99,15 +95,16 @@ Contém scripts SQL usados para popular o banco de dados PostgreSQL com dados in
 
 ### POPULAR O BANCO DE DADOS
 
-Os arquivos SQL de INSERT estão na pasta `\server\scripts`. Execute o comando 
+Os arquivos SQL de INSERT estão na pasta `\server\scripts_sql`. Execute o comando 
 
-`python scripts/populate.py` 
+`python scripts_sql/populate.py` 
 
 para popular o banco de dados PostgreSQL. O script já trata possíveis duplicações evitando erros ao inserir registros existentes.
 
 ### TESTAR A API
 
 #### Scripts para testar a API (localizados em server/api/scripts):
+
 `criar_reserva.py`
 
 Script para criar uma nova reserva via API.
@@ -128,12 +125,18 @@ Script para criar eventos no sistema.
 
 Script para simular o pagamento de um recibo.
 
-Estes scripts facilitam testes manuais e automatizados sem necessidade de ferramentas externas como Postman.
+Esses scripts utilizam a biblioteca requests para enviar requisições HTTP para os endpoints da aplicação e ajudam no desenvolvimento e depuração das funcionalidades.
 
-### COMANDOS ÚTEIS:
-- Criar superusuário:
+Cada script pode ser executado diretamente com o Python:
 
-  `python manage.py createsuperuser`
+`python server/api/scripts/nome_do_script.py`
+
+Os scripts utilizam dados fixos. Certifique-se de que os dados (ex: usuários, veículos, reservas) existem no banco.
+
+Você pode modificar os scripts para testar com outros dados, conforme necessário.
+
+
+
   
 
 
