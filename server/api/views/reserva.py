@@ -5,6 +5,8 @@ from api.serializers.reserva import CriarReservaSerializer
 from api.models import Usuario, Veiculo, Credencial, Reserva, Vaga
 from api.services.reserva import criar_reserva, liberar_vaga_e_alocar_fila
 from django.utils import timezone
+from api.services.incidente import incidente_acesso_nao_autorizado, incidente_tempo_excedido, incidente_tentativa_fraude
+
 
 @api_view(['POST'])
 def criar_reserva_view(request):
@@ -40,10 +42,12 @@ def confirmar_entrada_view(request):
         reserva = Reserva.objects.get(credencial=credencial)
 
         if reserva.veiculo.placa != placa:
+            incidente_tentativa_fraude(reserva.usuario, reserva)
             return Response({'erro': 'Placa não corresponde à credencial.'}, status=status.HTTP_400_BAD_REQUEST)
 
         agora = timezone.now()
         if reserva.data_hora_entrada is None or reserva.data_hora_entrada.date() != agora.date():
+            incidente_acesso_nao_autorizado(reserva.usuario, reserva)
             return Response({'erro': 'A entrada só pode ser confirmada no dia da reserva.'}, status=status.HTTP_400_BAD_REQUEST)
 
         agora = timezone.now()
@@ -78,6 +82,10 @@ def confirmar_saida_view(request):
             return Response({'erro': 'Placa não corresponde à credencial.'}, status=status.HTTP_400_BAD_REQUEST)
 
         agora = timezone.now()
+        entrada = reserva.data_hora_entrada
+        if entrada and (agora - entrada).total_seconds() > 12 * 3600:
+            incidente_tempo_excedido(reserva.usuario, reserva)
+
         reserva.data_hora_saida = agora
         reserva.status = 'concluida'  
         reserva.save()
