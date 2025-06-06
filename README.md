@@ -75,6 +75,10 @@ As views do Django que recebem as requisições HTTP, validam dados, chamam as f
 
 Contém scripts SQL usados para popular o banco de dados PostgreSQL com dados iniciais (ex.: usuários, funcionários, vagas, veículos). Esses scripts facilitam a criação de registros para testes e desenvolvimento.
 
+`server/scripts_redis/`
+
+Contém o código populate.py que adiciona algumas variáveis para as seguintes colunas: vaga_id, status, tipo, placa, cpf, hora_entrada. Essas variáveis tem como objetivo facilitar durante o desenvolvimento do projeto.
+
 ## TESTANDO O MONGODB 
 
 1. Execute o script de teste para popular o banco de dados:
