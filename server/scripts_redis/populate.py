@@ -2,10 +2,6 @@ import random
 from datetime import datetime, timedelta
 from api.services.mapa import criar_vaga
 import os
-# import django
-
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'server.settings')
-# django.setup()
 
 tipos_vaga = ["convencional", "eletrica", "preferencial"]
 status_vaga = ["disponivel", "ocupada", "reservada"]

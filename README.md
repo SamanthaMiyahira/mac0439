@@ -97,13 +97,43 @@ Contém o código populate.py que adiciona algumas variáveis para as seguintes 
 
    `exit`
 
+## TESTANDO O REDIS
+
+1. Verificar se o Redis está em execução:
+
+   `sudo service redis-server status`
+
+2. Inicialização do Redis se não estiver executando:
+
+   `sudo service redis-server start`
+
+3. Acesse o cliente do Redis:
+
+   `redis-cli`
+
+4. Liste todas as chaves:
+
+   `keys *`
+
+5. Para sair:
+
+   `exit`
+
 ### POPULAR O BANCO DE DADOS
+
+#### BANCO POSTGRESQL
 
 Os arquivos SQL de INSERT estão na pasta `\server\scripts_sql`. Execute o comando 
 
 `python scripts_sql/populate.py` 
 
 para popular o banco de dados PostgreSQL. O script já trata possíveis duplicações evitando erros ao inserir registros existentes.
+
+#### BANCO REDIS
+
+Para popular o banco Redis, é necessário executar o seguinte comando:
+
+`python manage.py shell < scripts_redis/populate.py`
 
 ### TESTAR A API
 
@@ -139,9 +169,8 @@ Os scripts utilizam dados fixos. Certifique-se de que os dados (ex: usuários, v
 
 Você pode modificar os scripts para testar com outros dados, conforme necessário.
 
+#### Comando para executar os testes do Redis (localizado em server/api/tests/test_redis.py):
 
-
-  
-
+`python manage.py test api.tests.test_redis`
 
 
