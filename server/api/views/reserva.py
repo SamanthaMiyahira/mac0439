@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from api.serializers.reserva import CriarReservaSerializer
 from api.models import Usuario, Veiculo, Credencial, Reserva, Vaga
-from api.services.reserva import criar_reserva
+from api.services.reserva import criar_reserva, liberar_vaga_e_alocar_fila
 from django.utils import timezone
 
 @api_view(['POST'])
@@ -83,7 +83,7 @@ def confirmar_saida_view(request):
         reserva.save()
 
         vaga = reserva.vaga
-        vaga.status = 'disponível'
+        liberar_vaga_e_alocar_fila(vaga)
         vaga.save()
 
         credencial.status = 'desativado'

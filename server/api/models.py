@@ -101,6 +101,7 @@ class FilaDeEspera(models.Model):
     
     prioridade = models.IntegerField(validators=[MinValueValidator(0)])
     data_hora = models.DateTimeField()
+    data_reserva = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     reserva = models.ForeignKey(Reserva, on_delete=models.SET_NULL, null=True, blank=True)
