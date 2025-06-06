@@ -1,6 +1,6 @@
 import random
 from datetime import datetime, timedelta
-from api.services.redis_crud import criar_vaga
+from server.api.services.mapa import criar_vaga
 import os
 # import django
 
