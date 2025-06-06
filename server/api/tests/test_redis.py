@@ -1,5 +1,5 @@
 from django.test import TestCase
-from server.api.services.mapa import (
+from api.services.mapa import (
     criar_vaga,
     ler_vaga,
     atualizar_vaga,
