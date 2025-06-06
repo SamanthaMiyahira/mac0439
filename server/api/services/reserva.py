@@ -1,18 +1,14 @@
-# app/services/reserva_service.py
-
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
 from api.models import Reserva, Credencial, Notificacao, FilaDeEspera, Vaga
+from .recibo import criar_recibo
 
-def criar_reserva(usuario, veiculo, periodo, tipo):
+def criar_reserva(usuario, veiculo, data, tipo):
     entrada = None 
     saida = None
 
-    # Se o período puder ser inteiro (em horas) ou timedelta
-    if isinstance(periodo, int):
-        periodo = timedelta(hours=periodo)
-    elif not isinstance(periodo, timedelta):
-        periodo = timedelta(hours=2) 
+    if isinstance(data, str):
+        data = datetime.strptime(data, "%Y-%m-%d").date()
 
     vaga = Vaga.objects.filter(
         status='disponivel',
@@ -30,7 +26,7 @@ def criar_reserva(usuario, veiculo, periodo, tipo):
         reserva = Reserva.objects.create(
             data_hora_entrada=entrada,  
             data_hora_saida=saida,
-            periodo=periodo, 
+            data=data, 
             tipo=tipo,
             usuario=usuario,
             veiculo=veiculo,
@@ -48,6 +44,25 @@ def criar_reserva(usuario, veiculo, periodo, tipo):
             usuario=usuario,
             reserva=reserva
         )
+
+        # Cria recibo se for visitante
+        if getattr(usuario, "tipo", "").lower() == "visitante":
+
+            criar_recibo(
+                valor=50.00,
+                data_hora=timezone.now().isoformat(),
+                status="pendente",
+                metodo_pagamento=None,
+                data_pagamento=None,
+                visitante={
+                    "cpf": usuario.cpf,
+                    "nome": usuario.nome,
+                    "veiculo_placa": veiculo.placa
+                },
+                responsavel_emissor="sistema_automatico",
+                evento=(tipo.lower() == "eventual")
+            )
+
         return reserva
     else:
         FilaDeEspera.objects.create(

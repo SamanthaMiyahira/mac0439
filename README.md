@@ -30,6 +30,51 @@
 - Usuário: admin
 - Senha: admin
 
+## ESTRUTURA DO PROJETO
+
+O projeto Django está organizado dentro da pasta server com a seguinte estrutura principal:
+
+`server/`
+
+Contém arquivos principais do Django como settings.py, urls.py, wsgi.py, etc.
+
+`server/api/`
+
+Aplicação principal da API Django, com os seguintes subdiretórios:
+
+`migrations/`
+
+Arquivos gerados automaticamente para versionamento das alterações no banco de dados.
+
+`scripts/`
+
+Scripts Python usados para testar a API, como confirmação de entrada, confirmação de saída, criação de eventos, criação de reservas, pagamento de recibos, entre outros. Estes scripts simulam requisições à API enviando dados no formato JSON, facilitando testes automáticos e manuais.
+
+`serializers/`
+
+Contém os serializers do Django REST Framework, responsáveis por converter os dados dos modelos (models.py) em JSON e vice-versa, permitindo que a API envie e receba informações no formato adequado.
+
+`services/`
+
+Camada onde ficam as funções principais da aplicação, como criar_reserva, criar_evento, e outras lógicas de negócio. Essas funções manipulam os dados e interagem com os modelos.
+
+
+`tests/`
+
+Testes unitários da aplicação para garantir que funcionalidades específicas estão funcionando conforme esperado.
+
+`utils/`
+
+Utilitários e helpers, como o mongo_utils.py que inicializa o cliente MongoDB para operações com o banco NoSQL.
+
+`views/`
+
+As views do Django que recebem as requisições HTTP, validam dados, chamam as funções do serviço (services) e retornam as respostas da API. Elas atuam como controladoras, ligando os serializers, models e services.
+
+`server/scripts_sql/`
+
+Contém scripts SQL usados para popular o banco de dados PostgreSQL com dados iniciais (ex.: usuários, funcionários, vagas, veículos). Esses scripts facilitam a criação de registros para testes e desenvolvimento.
+
 ## TESTANDO O MONGODB 
 
 1. Execute o script de teste para popular o banco de dados:
@@ -62,13 +107,28 @@ para popular o banco de dados PostgreSQL. O script já trata possíveis duplica�
 
 ### TESTAR A API
 
-#### Criação da reserva
+#### Scripts para testar a API (localizados em server/api/scripts):
+`criar_reserva.py`
 
-A API de criar reserva está em: `http://localhost:8000/api/criar-reserva/`.
+Script para criar uma nova reserva via API.
 
-O script para se comunicar com essa API está em `scripts/criar_reserva.py`.
+`confirmar_entrada.py`
 
-Este script é útil para testar manualmente o funcionamento da API de reservas sem precisar usar uma interface gráfica ou ferramenta como Postman.
+Script para confirmar a entrada na reserva, enviando dados de QR code e placa.
+
+`confirmar_saida.py`
+
+Script para confirmar a saída do veículo.
+
+`criar_evento.py`
+
+Script para criar eventos no sistema.
+
+`pagar_recibo.py`
+
+Script para simular o pagamento de um recibo.
+
+Estes scripts facilitam testes manuais e automatizados sem necessidade de ferramentas externas como Postman.
 
 ### COMANDOS ÚTEIS:
 - Criar superusuário:
