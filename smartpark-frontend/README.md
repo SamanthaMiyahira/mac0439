@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+## Como criar a interface React do SmartPark
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A interface do SmartPark foi desenvolvida com React e está organizada da seguinte forma:
 
-## Available Scripts
+- Pasta src/components/
 
-In the project directory, you can run:
+Contém os componentes React que representam as diferentes partes da interface. Atualmente, temos o componente criarReserva.js, responsável pelo formulário e lógica de criação de reservas.
 
-### `npm start`
+- Arquivo src/api.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Centraliza as chamadas à API do backend. Por exemplo, a função criarReserva faz a requisição POST para o endpoint que cria a reserva no servidor Django.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Arquivo src/App.js
 
-### `npm test`
+É o componente principal que gerencia a tela única (single-page) da aplicação. Ele importa o componente criarReserva e renderiza essa interface. Também pode ser usado para adicionar outros componentes e botões para navegar entre funcionalidades futuras.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Como usar
 
-### `npm run build`
+Para iniciar a aplicação, execute npm start na raiz do frontend.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+A interface abrirá no navegador em http://localhost:3000 e mostrará a tela única com o formulário de criação de reserva.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+O componente criarReserva envia os dados para o backend usando as funções definidas em api.js.

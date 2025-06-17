@@ -1,10 +1,9 @@
 // src/App.js
 import React, { useState } from 'react';
 import CriarReserva from './components/criarReserva';
-// Importe outros componentes quando criar, ex:
-// import ConfirmarEntrada from './components/ConfirmarEntrada';
-// import ConfirmarSaida from './components/ConfirmarSaida';
-// import PagarRecibo from './components/PagarRecibo';
+// Importar outros componentes quando for criar, ex:
+// import confirmarEntrada from './components/ConfirmarEntrada';
+
 
 export default function App() {
   const [tela, setTela] = useState('reserva');
@@ -20,7 +19,7 @@ export default function App() {
 
       <main>
         {tela === 'reserva' && <CriarReserva />}
-        {/* Aqui você adiciona as outras telas quando criar */}
+        {/* Adicionar as outras telas */}
         {tela === 'entrada' && <div>Confirmar Entrada (em desenvolvimento)</div>}
         {tela === 'saida' && <div>Confirmar Saída (em desenvolvimento)</div>}
         {tela === 'pagar' && <div>Pagar Recibo (em desenvolvimento)</div>}
