@@ -1,12 +1,38 @@
 # SmartPark - Sistema de Estacionamento
 
-## COMO EXECUTAR O PROJETO 
+## COMO EXECUTAR O FRONTEND DO PROJETO 
+
+### PRÉ-REQUISITOS
+- Node.js instalado: https://nodejs.org 
+
+- Instale as dependências (se houver outras depois): npm install axios
+
+### EXECUÇÃO DO FRONTEND
+
+- Acesse a pasta do frontend:
+
+`cd smartpark-frontend`
+
+- Para iniciar a interface React
+
+`npm start`
+
+- A aplicação abrirá automaticamente em: http://localhost:3000
+
+### INTEGRAÇÃO COM O BACKEND DJANGO
+
+- Certifique-se de que a API Django está rodando em http://localhost:8000
+
+## COMO EXECUTAR O BACKEND DO PROJETO 
 
 ### PRÉ-REQUISITOS:
+
 - MongoDB instalado (baixe em: https://www.mongodb.com/try/download/community)
+
 - PostgreSQL instalado (https://www.postgresql.org/download/)
 
 ### INSTALAÇÃO:
+
 1. Instale as dependências:
 
    `pip install -r requirements.txt`
@@ -18,12 +44,33 @@
    `python manage.py migrate`
 
 ### EXECUÇÃO:
-1. Inicie o servidor Django:
+
+1. Acesse a pasta do backend:
+
+   `cd server`
+
+2. Inicie o servidor Django:
 
    `python manage.py runserver`
 
-2. Acesse no navegador:
+3. Acesse no navegador:
    http://localhost:8000
+
+#### Observação
+
+O backend oferece endereços para acessar as funções do sistema, como estes:
+
+- /api/criar-reserva/ — para criar uma nova reserva
+
+- /api/confirmar-entrada/ — para confirmar a entrada do carro
+
+- /api/confirmar-saida/ — para confirmar a saída do carro
+
+- /api/criar-evento/ — para criar eventos no estacionamento
+
+- /api/recibos/pagar/ — para pagar um recibo
+
+Importante: Se você abrir só http://localhost:8000 no navegador, não verá nada, porque o backend é uma API. Use http://localhost:8000 + algum dos endereços acima para acessar a interface do Postman. Você pode usar o Postman para enviar uma requisição em JSON para a API do backend. Depois, o Postman mostra a resposta da API na mesma interface, permitindo ver os dados que o backend retornou.
 
 ### ACESSO ADMIN:
 - Crie um super usuário para acessar a página de admin: `python manage.py createsuperuser`
