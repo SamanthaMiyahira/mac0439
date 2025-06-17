@@ -19,6 +19,8 @@
 
 - A aplicação abrirá automaticamente em: http://localhost:3000
 
+
+
 ### INTEGRAÇÃO COM O BACKEND DJANGO
 
 - Certifique-se de que a API Django está rodando em http://localhost:8000
