@@ -6,7 +6,7 @@ from api.models import Usuario, Veiculo, Credencial, Reserva, Vaga
 from api.services.reserva import criar_reserva, liberar_vaga_e_alocar_fila
 from django.utils import timezone
 from api.services.incidente import incidente_acesso_nao_autorizado, incidente_tempo_excedido, incidente_tentativa_fraude
-
+from api.serializers.reserva import ReservaDetalhesSerializer
 
 @api_view(['POST'])
 def criar_reserva_view(request):
@@ -30,7 +30,9 @@ def criar_reserva_view(request):
         else:
             return Response({'mensagem': 'Sem vagas disponíveis. Usuário na fila de espera.'}, status=status.HTTP_200_OK)
     
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        print("Erros no serializer:", serializer.errors) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def confirmar_entrada_view(request):
@@ -104,3 +106,25 @@ def confirmar_saida_view(request):
 
     except Reserva.DoesNotExist:
         return Response({'erro': 'Reserva não encontrada para essa credencial.'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def reserva_detalhes_view(request, id):
+    try:
+        reserva = Reserva.objects.get(id=id)
+    except Reserva.DoesNotExist:
+        return Response({'erro': 'Reserva não encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ReservaDetalhesSerializer(reserva)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def reservas_por_cpf_view(request, cpf):
+    try:
+        reservas = Reserva.objects.filter(usuario__cpf=cpf).order_by('-data_hora_entrada')
+        if not reservas.exists():
+            return Response({'erro': 'Nenhuma reserva encontrada para este CPF'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ReservaDetalhesSerializer(reservas, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response({'erro': 'Erro ao buscar reserva'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

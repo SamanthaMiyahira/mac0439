@@ -7,3 +7,4 @@ requests
 djangorestframework
 django-redis
 redis
+django-cors-headers

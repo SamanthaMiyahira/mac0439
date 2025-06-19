@@ -5,7 +5,7 @@ import { criarReserva } from '../api';
 export default function CriarReserva() {
   const [cpf, setCpf] = useState('');
   const [data, setData] = useState('');
-  const [tipo, setTipo] = useState('eventual'); // ou 'mensal' etc
+  const [tipo, setTipo] = useState('recorrente');
   const [mensagem, setMensagem] = useState(null);
   const [erro, setErro] = useState(null);
 
@@ -14,10 +14,14 @@ export default function CriarReserva() {
     setMensagem(null);
     setErro(null);
 
+    const dados = { cpf, data, tipo };
+    console.log('Enviando para backend:', dados);
+
     try {
-      const resultado = await criarReserva({ cpf, data, tipo });
+      const resultado = await criarReserva(dados);
       setMensagem(resultado.mensagem || 'Reserva criada com sucesso!');
     } catch (err) {
+      console.error('Erro ao criar reserva:', err);
       setErro(err.message);
     }
   };
@@ -31,14 +35,14 @@ export default function CriarReserva() {
           <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
         </div>
         <div>
-          <label>Data (YYYY-MM-DD): </label>
+          <label>Data (DD-MM-AAAA): </label>
           <input type="date" value={data} onChange={(e) => setData(e.target.value)} required />
         </div>
         <div>
           <label>Tipo: </label>
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="eventual">Eventual</option>
-            <option value="mensal">Mensal</option>
+            <option value="recorrente">Recorrente</option>
           </select>
         </div>
         <button type="submit">Criar Reserva</button>
