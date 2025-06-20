@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import TextInput from '../TextInput/TextInput';
 import Select from '../Select/Select';
 
-export default function CriarReserva() {
+export default function CriarReserva({ setTela, setIdReserva }) {
   const [cpf, setCpf] = useState('');
   const [data, setData] = useState('');
   const [tipo, setTipo] = useState('recorrente');
@@ -69,6 +69,15 @@ export default function CriarReserva() {
             <option value="eventual">Eventual</option>
             <option value="recorrente">Recorrente</option>
           </Select>
+        </div>
+        <div>
+          <label>Selecione a vaga: </label>
+          <Button
+            type="button"
+            onClick={() => setTela('mapa')}
+          >
+            Abrir Mapa
+          </Button>
         </div>
         <Button type="submit">Criar Reserva</Button>
       </form>
