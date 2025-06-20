@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.utils import timezone
-from api.models import Reserva, Credencial, Notificacao, FilaDeEspera, Vaga
+from api.models import Reserva, Credencial, Notificacao, FilaDeEspera, Vaga, Veiculo
 from .recibo import criar_recibo
 
 def criar_reserva(usuario, veiculo, data, tipo):
@@ -88,17 +88,28 @@ def liberar_vaga_e_alocar_fila(vaga):
     fila = FilaDeEspera.objects.filter(status='aguardando').order_by('-prioridade', 'data_hora').first()
 
     if fila:
-        reserva = criar_reserva(fila.usuario, fila.usuario.veiculo, data=fila.data_reserva, tipo='eventual') 
+        veiculo = Veiculo.objects.filter(usuario=fila.usuario).first()
         
-        if reserva:
-            fila.status = 'realizada'
-            fila.save()
+        if veiculo:
+            reserva = criar_reserva(fila.usuario, veiculo, data=fila.data_reserva, tipo='eventual')
+            
+            if reserva:
+                fila.status = 'realizada'
+                fila.save()
 
+                Notificacao.objects.create(
+                    tipo='fila_de_espera',
+                    mensagem='Uma vaga foi liberada para você! Sua reserva foi criada.',
+                    data_hora=timezone.localtime(),
+                    usuario=fila.usuario,
+                    reserva=reserva
+                )
+        else:
             Notificacao.objects.create(
-                tipo='fila_de_espera',
-                mensagem='Uma vaga foi liberada para você! Sua reserva foi criada.',
+                tipo='erro',
+                mensagem='Você não possui veículo cadastrado para criar a reserva.',
                 data_hora=timezone.localtime(),
-                usuario=fila.usuario,
-                reserva=reserva
+                usuario=fila.usuario
             )
+
 

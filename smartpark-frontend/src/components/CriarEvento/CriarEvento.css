@@ -1,0 +1,18 @@
+.criar-evento-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.criar-evento-erro {
+  color: red;
+}
+
+.criar-evento-mensagem {
+  color: green;
+}

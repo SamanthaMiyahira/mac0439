@@ -1,0 +1,20 @@
+.eventos-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.evento-card {
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.eventos-erro {
+  color: red;
+}
+
+.eventos-mensagem {
+  color: green;
+}

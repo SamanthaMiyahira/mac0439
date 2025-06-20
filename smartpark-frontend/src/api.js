@@ -66,7 +66,7 @@ export async function confirmarSaida(credencial_id, placa) {
 export async function buscarReservaPorCpf(cpf) {
   try {
     const cpfUrl = encodeURIComponent(cpf);  
-    const response = await fetch(`http://localhost:8000/api/reservas/cpf/${cpfUrl}/`, {
+    const response = await fetch(`${API}/reservas/cpf/${cpfUrl}/`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -83,6 +83,29 @@ export async function buscarReservaPorCpf(cpf) {
     throw error;
   }
 }
+
+export async function criarEvento(evento) {
+  const response = await fetch(`${API}/criar-evento/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(evento),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.erro || 'Erro ao criar evento');
+  }
+
+  return response.json();
+}
+
+export async function buscarEventos() {
+  const res = await fetch("http://localhost:8000/api/eventos/");
+  if (!res.ok) throw new Error("Erro ao buscar eventos");
+  return res.json();
+}
+
+
 
 
 

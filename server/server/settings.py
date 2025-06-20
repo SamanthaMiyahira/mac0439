@@ -150,3 +150,4 @@ CORS_ALLOW_ALL_ORIGINS = True
 TIME_ZONE = 'America/Sao_Paulo'
 USE_TZ = True
 
+MONGO_URI = "mongodb://localhost:27017/"  

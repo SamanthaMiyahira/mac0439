@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import CriarReserva from './components/CriarReserva/CriarReserva';
 import MinhaReserva from './components/MinhaReserva/MinhaReserva'; 
 import Button from './components/Button/Button';
+import CriarEvento from './components/CriarEvento/CriarEvento';
+import Eventos from './components/Eventos/Eventos';
 
 export default function App() {
   const [tela, setTela] = useState('reserva');
@@ -11,13 +13,17 @@ export default function App() {
   return (
     <div>
       <nav style={{ marginBottom: 20 }}>
-        <Button onClick={() => setTela('reserva')}>Criar Reserva</Button>
-        <Button onClick={() => setTela('minha')}>Minha Reserva</Button>
+        <Button onClick={() => setTela('reserva')}>Criar reserva</Button>
+        <Button onClick={() => setTela('minha')}>Minhas reservas</Button>
+        <Button onClick={() => setTela('evento')}>Criar evento</Button>
+        <Button onClick={() => setTela('eventos')}>Eventos</Button>
       </nav>
 
       <main>
         {tela === 'reserva' && <CriarReserva setIdReserva={setIdReserva} />}
         {tela === 'minha' && <MinhaReserva idReserva={idReserva} />}
+        {tela === 'evento' && <CriarEvento />}
+        {tela === 'eventos' && <Eventos />}
       </main>
     </div>
   );
