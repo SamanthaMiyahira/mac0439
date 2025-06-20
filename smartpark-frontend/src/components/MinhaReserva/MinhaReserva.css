@@ -1,0 +1,61 @@
+.minha-reserva-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px 20px;
+  border: 1px solid #1976d2;
+  border-radius: 8px;
+  background: #f7fafd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.minha-reserva-container h2 {
+  text-align: center;
+  color: #1976d2;
+}
+
+.minha-reserva-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.minha-reserva-input-row input[type="text"] {
+  padding: 7px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.minha-reserva-mensagem {
+  color: green;
+  text-align: center;
+}
+
+.minha-reserva-erro {
+  color: red;
+  text-align: center;
+}
+
+.minha-reserva-lista {
+  margin-top: 20px;
+}
+
+.minha-reserva-card {
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  padding: 16px 14px;
+  margin: 10px 0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.minha-reserva-card p {
+  margin: 5px 0;
+}
+
+.minha-reserva-card button {
+  margin-right: 8px;
+  margin-top: 7px;
+}

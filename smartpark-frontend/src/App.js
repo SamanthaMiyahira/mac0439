@@ -1,7 +1,8 @@
 // src/App.js
 import React, { useState } from 'react';
-import CriarReserva from './components/criarReserva';
-import MinhaReserva from './components/minhaReserva'; 
+import CriarReserva from './components/CriarReserva/CriarReserva';
+import MinhaReserva from './components/MinhaReserva/MinhaReserva'; 
+import Button from './components/Button/Button';
 
 export default function App() {
   const [tela, setTela] = useState('reserva');
@@ -10,8 +11,8 @@ export default function App() {
   return (
     <div>
       <nav style={{ marginBottom: 20 }}>
-        <button onClick={() => setTela('reserva')}>Criar Reserva</button>
-        <button onClick={() => setTela('minha')}>Minha Reserva</button>
+        <Button onClick={() => setTela('reserva')}>Criar Reserva</Button>
+        <Button onClick={() => setTela('minha')}>Minha Reserva</Button>
       </nav>
 
       <main>

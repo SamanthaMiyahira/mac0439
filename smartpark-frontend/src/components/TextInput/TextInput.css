@@ -1,0 +1,12 @@
+.my-text-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.my-text-input:focus {
+  border-color: #1976d2;
+}
