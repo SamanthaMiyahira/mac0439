@@ -24,34 +24,50 @@ export default function MinhaReserva() {
     }
   };
 
-  const handleEntrada = async (reserva) => {
-    setMensagem('');
-    setErro('');
-    try {
-      const res = await confirmarEntrada(reserva.credencial.qrcode, reserva.veiculo.placa);
-      setMensagem(res.mensagem || 'Entrada confirmada');
-      // Atualiza status localmente
-      setReservas((old) =>
-        old.map((r) => (r.id === reserva.id ? { ...r, status: 'entrada confirmada' } : r))
-      );
-    } catch {
-      setErro('Erro ao confirmar entrada');
-    }
-  };
+    const handleEntrada = async (reserva) => {
+        setMensagem('');
+        setErro('');
+        try {
+            const res = await confirmarEntrada(reserva.credencial.id, reserva.veiculo.placa);
+            setMensagem(res.mensagem || 'Entrada confirmada');
 
-  const handleSaida = async (reserva) => {
-    setMensagem('');
-    setErro('');
-    try {
-      const res = await confirmarSaida(reserva.credencial.qrcode, reserva.veiculo.placa);
-      setMensagem(res.mensagem || 'Saída confirmada');
-      setReservas((old) =>
-        old.map((r) => (r.id === reserva.id ? { ...r, status: 'concluida' } : r))
-      );
-    } catch {
-      setErro('Erro ao confirmar saída');
-    }
-  };
+            if (res.reserva) {
+            setReservas(old =>
+                old.map(r => (r.id === res.reserva.id ? res.reserva : r))
+            );
+            } else {
+
+            setReservas(old =>
+                old.map(r => (r.id === reserva.id ? { ...r, status: 'entrada confirmada' } : r))
+            );
+            }
+        } catch (e) {
+            setErro(e.message || 'Erro ao confirmar entrada');
+        }
+    };
+
+
+    const handleSaida = async (reserva) => {
+        setMensagem('');
+        setErro('');
+        try {
+            const res = await confirmarSaida(reserva.credencial.id, reserva.veiculo.placa);
+            setMensagem(res.mensagem || 'Saída confirmada');
+
+            if (res.reserva) {
+            setReservas(old =>
+                old.map(r => (r.id === res.reserva.id ? res.reserva : r))
+            );
+            } else {
+            setReservas(old =>
+                old.map(r => (r.id === reserva.id ? { ...r, status: 'concluida' } : r))
+            );
+            }
+        } catch {
+            setErro('Erro ao confirmar saída');
+        }
+    };
+
 
   return (
     <div>
@@ -72,15 +88,18 @@ export default function MinhaReserva() {
           <h3>Reservas encontradas:</h3>
           {reservas.map((reserva) => (
             <div key={reserva.id} style={{ border: '1px solid #ccc', padding: 10, margin: 5 }}>
-              <p><strong>ID:</strong> {reserva.id}</p>
-              <p><strong>Tipo:</strong> {reserva.tipo}</p>
-              <p><strong>Status:</strong> {reserva.status}</p>
-              <p><strong>Data:</strong> {reserva.data}</p>
-              <p><strong>Placa:</strong> {reserva.veiculo?.placa || 'N/A'}</p>
-              <button onClick={() => handleEntrada(reserva)}>Confirmar Entrada</button>
-              <button onClick={() => handleSaida(reserva)}>Confirmar Saída</button>
+                <p><strong>ID:</strong> {reserva.id}</p>
+                <p><strong>Tipo da reserva:</strong> {reserva.tipo}</p>
+                <p><strong>Status:</strong> {reserva.status}</p>
+                <p><strong>Data:</strong> {reserva.data}</p>
+                <p><strong>Placa do veículo:</strong> {reserva.veiculo?.placa || 'N/A'}</p>
+                <p><strong>Vaga:</strong> {reserva.vaga ? `${reserva.vaga.tipo} - ${reserva.vaga.localizacao}` : 'N/A'}</p>
+                <p><strong>Credencial (QR Code):</strong> {reserva.credencial?.qrcode || 'N/A'}</p>
+                <p><strong>Status da Credencial:</strong> {reserva.credencial?.status || 'N/A'}</p>
+                <button onClick={() => handleEntrada(reserva)}>Confirmar Entrada</button>
+                <button onClick={() => handleSaida(reserva)}>Confirmar Saída</button>
             </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

@@ -6,7 +6,7 @@ def registrar_incidente(usuario, acao, gravidade, reserva=None):
         usuario=usuario,
         acao=acao,
         gravidade=gravidade,
-        data_hora=timezone.now(),
+        data_hora=timezone.localtime(),
         reserva=reserva
     )
 

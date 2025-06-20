@@ -20,12 +20,12 @@ export async function criarReserva(dadosReserva) {
   }
 }
 
-export async function confirmarEntrada(qrcode, placa) {
+export async function confirmarEntrada(credencial_id, placa) {
   try {
     const response = await fetch(`${API}/confirmar-entrada/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ qrcode, placa }),
+      body: JSON.stringify({ credencial_id, placa }),
     });
 
     const data = await response.json();
@@ -40,15 +40,17 @@ export async function confirmarEntrada(qrcode, placa) {
   }
 }
 
-export async function confirmarSaida(qrcode, placa) {
+export async function confirmarSaida(credencial_id, placa) {
   try {
     const response = await fetch(`${API}/confirmar-saida/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ qrcode, placa }),
+      body: JSON.stringify({ credencial_id, placa }),
     });
 
+    console.log('Resposta status:', response.status);
     const data = await response.json();
+    console.log('Resposta data:', data);
 
     if (!response.ok) {
       throw new Error(data.erro || 'Erro ao confirmar saída');
@@ -60,9 +62,11 @@ export async function confirmarSaida(qrcode, placa) {
   }
 }
 
+
 export async function buscarReservaPorCpf(cpf) {
   try {
-    const response = await fetch(`${API}/reservas/cpf/${cpf}`, {
+    const cpfUrl = encodeURIComponent(cpf);  
+    const response = await fetch(`http://localhost:8000/api/reservas/cpf/${cpfUrl}/`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -79,6 +83,7 @@ export async function buscarReservaPorCpf(cpf) {
     throw error;
   }
 }
+
 
 
 

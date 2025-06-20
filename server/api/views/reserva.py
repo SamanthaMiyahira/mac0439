@@ -36,49 +36,63 @@ def criar_reserva_view(request):
 
 @api_view(['POST'])
 def confirmar_entrada_view(request):
-    qrcode = request.data.get('qrcode')
+    credencial_id = request.data.get('credencial_id')
     placa = request.data.get('placa')
 
     try:
-        credencial = Credencial.objects.get(qrcode=qrcode, status='ativo')
+        credencial = Credencial.objects.get(id=credencial_id, status='ativo')
         reserva = Reserva.objects.get(credencial=credencial)
 
         if reserva.veiculo.placa != placa:
             incidente_tentativa_fraude(reserva.usuario, reserva)
             return Response({'erro': 'Placa não corresponde à credencial.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        agora = timezone.now()
-        if reserva.data_hora_entrada is None or reserva.data_hora_entrada.date() != agora.date():
+        agora = timezone.localtime()
+
+        if reserva.data != agora.date():
             incidente_acesso_nao_autorizado(reserva.usuario, reserva)
+            print("Data reserva:", reserva.data)
+            print("Data hoje:", agora.date())
             return Response({'erro': 'A entrada só pode ser confirmada no dia da reserva.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        agora = timezone.now()
+        if reserva.vaga is None:
+            return Response({'erro': 'Reserva ainda não tem vaga alocada.'}, status=status.HTTP_400_BAD_REQUEST)
+
         reserva.data_hora_entrada = agora
         reserva.save()
 
-        vaga = reserva.vaga
-        vaga.status = 'ocupada'
-        vaga.save()
+        reserva.vaga.status = 'ocupada'
+        reserva.vaga.save()
 
         credencial.status = 'bloqueado'
         credencial.save()
 
-        return Response({'mensagem': 'Entrada confirmada com sucesso.'}, status=status.HTTP_200_OK)
+        serializer = ReservaDetalhesSerializer(reserva)
+        return Response({
+            'mensagem': 'Entrada confirmada com sucesso.',
+            'reserva': serializer.data
+        }, status=status.HTTP_200_OK)
 
     except Credencial.DoesNotExist:
         return Response({'erro': 'Credencial inválida ou inativa.'}, status=status.HTTP_404_NOT_FOUND)
-
     except Reserva.DoesNotExist:
         return Response({'erro': 'Reserva não encontrada para essa credencial.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'erro': f'Erro interno: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 def confirmar_saida_view(request):
-    qrcode = request.data.get('qrcode')
+    credencial_id = request.data.get('credencial_id')
     placa = request.data.get('placa')
 
     try:
-        credencial = Credencial.objects.get(qrcode=qrcode, status='bloqueado')
-        reserva = Reserva.objects.get(credencial=credencial)
+        credencial = Credencial.objects.get(id=credencial_id, status='bloqueado')
+
+        reservas = Reserva.objects.filter(credencial=credencial, status='ativa')
+        if not reservas.exists():
+            return Response({'erro': 'Nenhuma reserva ativa encontrada para essa credencial.'}, status=status.HTTP_404_NOT_FOUND)
+
+        reserva = reservas.first()
 
         if reserva.veiculo.placa != placa:
             return Response({'erro': 'Placa não corresponde à credencial.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -89,23 +103,29 @@ def confirmar_saida_view(request):
             incidente_tempo_excedido(reserva.usuario, reserva)
 
         reserva.data_hora_saida = agora
-        reserva.status = 'concluida'  
+        reserva.status = 'concluida'
         reserva.save()
 
-        vaga = reserva.vaga
-        liberar_vaga_e_alocar_fila(vaga)
-        vaga.save()
+        if reserva.vaga:
+            liberar_vaga_e_alocar_fila(reserva.vaga)
+            reserva.vaga.status = 'disponivel' 
+            reserva.vaga.save()
+        else:
+            pass
 
         credencial.status = 'desativado'
         credencial.save()
 
-        return Response({'mensagem': 'Saída confirmada com sucesso.'}, status=status.HTTP_200_OK)
+        serializer = ReservaDetalhesSerializer(reserva)
+        return Response({
+            'mensagem': 'Saída confirmada com sucesso.',
+            'reserva': serializer.data
+        }, status=status.HTTP_200_OK)
 
     except Credencial.DoesNotExist:
         return Response({'erro': 'Credencial inválida ou inativa.'}, status=status.HTTP_404_NOT_FOUND)
-
-    except Reserva.DoesNotExist:
-        return Response({'erro': 'Reserva não encontrada para essa credencial.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'erro': f'Erro interno: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 def reserva_detalhes_view(request, id):

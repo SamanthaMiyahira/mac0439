@@ -147,4 +147,6 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+TIME_ZONE = 'America/Sao_Paulo'
+USE_TZ = True
 
