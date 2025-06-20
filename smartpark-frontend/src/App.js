@@ -6,6 +6,7 @@ import Button from './components/Button/Button';
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import Eventos from './components/Eventos/Eventos';
 import Pagamentos from './components/Pagamentos/Pagamentos';
+import MapaEstacionamento from './components/MapaEstacionamento/MapaEstacionamento';
 
 export default function App() {
   const [tela, setTela] = useState('reserva');
@@ -22,11 +23,12 @@ export default function App() {
       </nav>
 
       <main>
-        {tela === 'reserva' && <CriarReserva setIdReserva={setIdReserva} />}
+        {tela === 'reserva' && <CriarReserva setTela={setTela} setIdReserva={setIdReserva} />}
         {tela === 'minha' && <MinhaReserva idReserva={idReserva} />}
         {tela === 'evento' && <CriarEvento />}
         {tela === 'eventos' && <Eventos />}
         {tela === 'pagamentos' && <Pagamentos />}
+        {tela === 'mapa' && <MapaEstacionamento setTela={setTela} />}
       </main>
     </div>
   );

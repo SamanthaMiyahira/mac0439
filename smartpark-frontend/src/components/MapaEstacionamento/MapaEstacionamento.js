@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './MapaEstacionamento.css';
+import Button from '../Button/Button';
 
-export default function MapaEstacionamento({ vagasData, onSelecionar }) {
+export default function MapaEstacionamento({ vagasData, onSelecionar, setTela }) {
     // Se quiser, passe as vagas por props, senão use aqui mesmo:
     const [vagas, setVagas] = useState(vagasData || [
         { id: 1, status: 'livre' },
@@ -11,7 +12,19 @@ export default function MapaEstacionamento({ vagasData, onSelecionar }) {
         { id: 5, status: 'ocupada' },
         { id: 6, status: 'livre' },
         { id: 7, status: 'livre' },
-        { id: 8, status: 'livre' }
+        { id: 8, status: 'livre' },
+        { id: 9, status: 'livre' },
+        { id: 10, status: 'livre' },
+        { id: 11, status: 'livre' },
+        { id: 12, status: 'ocupada' },
+        { id: 13, status: 'livre' },
+        { id: 14, status: 'livre' },
+        { id: 15, status: 'livre' },
+        { id: 16, status: 'livre' },
+        { id: 17, status: 'livre' },
+        { id: 18, status: 'livre' },
+        { id: 19, status: 'livre' },
+        { id: 20, status: 'livre' }
     ]);
     const [vagaSelecionada, setVagaSelecionada] = useState(null);
 
@@ -40,6 +53,7 @@ export default function MapaEstacionamento({ vagasData, onSelecionar }) {
                     <strong>Vaga selecionada:</strong> {vagaSelecionada}
                 </div>
             )}
+            <Button type="button" onClick={() => setTela('reserva')}>Voltar</Button>
         </div>
 
     );
