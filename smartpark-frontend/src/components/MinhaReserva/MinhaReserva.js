@@ -98,8 +98,12 @@ export default function MinhaReserva() {
                             <p><strong>Vaga:</strong> {reserva.vaga ? `${reserva.vaga.tipo} - ${reserva.vaga.localizacao}` : 'N/A'}</p>
                             <p><strong>Credencial (QR Code):</strong> {reserva.credencial?.qrcode || 'N/A'}</p>
                             <p><strong>Status da Credencial:</strong> {reserva.credencial?.status || 'N/A'}</p>
-                            <Button onClick={() => handleEntrada(reserva)}>Confirmar Entrada</Button>
-                            <Button onClick={() => handleSaida(reserva)}>Confirmar Saída</Button>
+                            {reserva.status !== 'cancelada' && reserva.status !== 'concluida' && (
+                                <>
+                                    <Button onClick={() => handleEntrada(reserva)}>Confirmar Entrada</Button>
+                                    <Button onClick={() => handleSaida(reserva)}>Confirmar Saída</Button>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>

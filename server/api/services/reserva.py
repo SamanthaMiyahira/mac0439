@@ -3,7 +3,7 @@ from django.utils import timezone
 from api.models import Reserva, Credencial, Notificacao, FilaDeEspera, Vaga, Veiculo
 from .recibo import criar_recibo
 
-def criar_reserva(usuario, veiculo, data, tipo):
+def criar_reserva(usuario, veiculo, data, tipo, evento_id=None):
     entrada = None 
     saida = None
 
@@ -31,7 +31,8 @@ def criar_reserva(usuario, veiculo, data, tipo):
             usuario=usuario,
             veiculo=veiculo,
             vaga=vaga,
-            credencial=credencial
+            credencial=credencial,
+            evento_id=evento_id
         )
 
         vaga.status = 'reservada'

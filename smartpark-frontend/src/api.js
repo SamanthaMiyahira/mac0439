@@ -105,6 +105,20 @@ export async function buscarEventos() {
   return res.json();
 }
 
+export async function atualizarStatusEvento(eventoId, status) {
+  const response = await fetch(`${API}/eventos/${eventoId}/status/`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.erro || 'Erro ao atualizar status do evento');
+  }
+
+  return response.json();
+}
 
 
 

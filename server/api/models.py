@@ -80,8 +80,10 @@ class Reserva(models.Model):
     STATUS_CHOICES = [
         ('ativa', 'Ativa'),
         ('concluida', 'Concluída'),
+        ('cancelada', 'Cancelada'),
     ]
-    
+
+    evento_id = models.CharField(max_length=50, null=True, blank=True)
     data_hora_entrada = models.DateTimeField(null=True, blank=True)
     data_hora_saida = models.DateTimeField(null=True, blank=True)
     data = models.DateField(null=True, blank=True)

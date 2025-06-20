@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views.evento import criar_evento_view, listar_eventos_view
+from api.views.evento import criar_evento_view, listar_eventos_view, atualizar_status_evento_view
 from api.views.reserva import criar_reserva_view, confirmar_entrada_view, confirmar_saida_view, reserva_detalhes_view, reservas_por_cpf_view
 from api.views.recibo import listar_recibos_pendentes_view, pagar_recibo_view
 
@@ -31,4 +31,5 @@ urlpatterns = [
     path('api/reserva/<int:id>/', reserva_detalhes_view, name='reserva_detalhes'),
     path('api/reservas/cpf/<str:cpf>/', reservas_por_cpf_view, name='reservas_por_cpf'),
     path('api/eventos/', listar_eventos_view, name='listar_eventos'),
+    path('api/eventos/<str:evento_id>/status/', atualizar_status_evento_view),
 ]

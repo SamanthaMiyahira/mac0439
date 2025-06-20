@@ -2,8 +2,8 @@ from datetime import datetime
 from ..models import Usuario, Veiculo
 from ..utils.mongo_utils import get_mongo_db
 from .reserva import criar_reserva
-
 from django.core.exceptions import ObjectDoesNotExist
+from api.models import Reserva
 
 def criar_evento(titulo, responsavel_cpf, data_hora, participantes=None):
     db = get_mongo_db()
@@ -15,25 +15,6 @@ def criar_evento(titulo, responsavel_cpf, data_hora, participantes=None):
     veiculo_responsavel = Veiculo.objects.filter(usuario=responsavel).first()
     if not veiculo_responsavel:
         raise ValueError("Veículo do responsável não encontrado")
-
-    # Vamos usar data_hora.date() para passar só a data para a reserva
-    reserva_resp = criar_reserva(responsavel, veiculo_responsavel, data=data_hora.date(), tipo='eventual')
-    print("Reserva do responsável criada?", reserva_resp)
-
-    if participantes:
-        for p in participantes:
-            cpf = p["cpf"]
-            try:
-                usuario = Usuario.objects.get(cpf=cpf)
-                veiculo = Veiculo.objects.filter(usuario=usuario).first()
-                if not veiculo:
-                    print(f"Veículo não encontrado para usuário {cpf}")
-                    continue
-                reserva_part = criar_reserva(usuario, veiculo, data=data_hora.date(), tipo='eventual')
-                print(f"Reserva do participante {cpf} criada?", reserva_part)
-            except ObjectDoesNotExist:
-                print(f"Usuário participante {cpf} não encontrado")
-                continue
 
     total_vagas = 1 + (len(participantes) if participantes else 0)
 
@@ -50,7 +31,28 @@ def criar_evento(titulo, responsavel_cpf, data_hora, participantes=None):
     }
 
     result = db.eventos.insert_one(evento)
-    return str(result.inserted_id)
+    evento_id = str(result.inserted_id)
+
+    reserva_resp = criar_reserva(responsavel, veiculo_responsavel, data=data_hora.date(), tipo='eventual', evento_id=evento_id)
+    print("Reserva do responsável criada?", reserva_resp)
+
+    if participantes:
+        for p in participantes:
+            cpf = p["cpf"]
+            try:
+                usuario = Usuario.objects.get(cpf=cpf)
+                veiculo = Veiculo.objects.filter(usuario=usuario).first()
+                if not veiculo:
+                    print(f"Veículo não encontrado para usuário {cpf}")
+                    continue
+                reserva_part = criar_reserva(usuario, veiculo, data=data_hora.date(), tipo='eventual', evento_id=evento_id)
+                print(f"Reserva do participante {cpf} criada?", reserva_part)
+            except ObjectDoesNotExist:
+                print(f"Usuário participante {cpf} não encontrado")
+                continue
+
+    return evento_id
+
 
 def incluir_placa_participantes(evento):
     participantes_com_placa = []
@@ -64,3 +66,22 @@ def incluir_placa_participantes(evento):
         })
     evento['participantes'] = participantes_com_placa
     return evento
+
+def cancelar_reservas_do_evento(evento_id):
+    reservas = Reserva.objects.filter(evento_id=evento_id)
+    for reserva in reservas:
+        reserva.status = 'cancelada'
+        reserva.save()
+        if reserva.credencial:
+            reserva.credencial.status = 'desativado'
+            reserva.credencial.save()
+
+def concluir_reservas_do_evento(evento_id):
+    reservas = Reserva.objects.filter(evento_id=evento_id, status='ativa')
+    for reserva in reservas:
+        reserva.status = 'concluida'
+        reserva.save()
+        if reserva.credencial:
+            reserva.credencial.status = 'desativado'
+            reserva.credencial.save()
+
