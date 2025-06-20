@@ -1,6 +1,16 @@
 .eventos-container {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 700px; 
+  margin: 40px auto;
+  padding: 30px 25px; 
+  border: 1px solid #1976d2; 
+  border-radius: 8px; 
+  background: #f7fafd; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
+}
+
+.eventos-container h2 {
+  text-align: center;
+  color: #1976d2;
 }
 
 .evento-card {
@@ -13,8 +23,10 @@
 
 .eventos-erro {
   color: red;
+  text-align: center;
 }
 
 .eventos-mensagem {
   color: green;
+  text-align: center;
 }

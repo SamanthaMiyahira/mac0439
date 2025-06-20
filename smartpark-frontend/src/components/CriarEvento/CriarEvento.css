@@ -1,18 +1,27 @@
 .criar-evento-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  border: 1px solid #1976d2;
+  border-radius: 8px;
+  background: #f7fafd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  margin: auto;
   gap: 10px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+}
+
+.criar-evento-container h2 {
+  text-align: center;
+  color: #1976d2;
 }
 
 .criar-evento-erro {
   color: red;
+  text-align: center;
 }
 
 .criar-evento-mensagem {
   color: green;
+  text-align: center;
 }

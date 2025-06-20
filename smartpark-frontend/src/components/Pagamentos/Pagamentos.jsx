@@ -36,13 +36,15 @@ export default function Pagamentos() {
 
   return (
     <div className="pagamentos-container">
-      <h2>Pagamentos pendentes</h2>
-      <TextInput
-        placeholder="Digite seu CPF"
-        value={cpf}
-        onChange={(e) => setCpf(e.target.value)}
-      />
-      <Button onClick={handleBuscar}>Buscar recibos</Button>
+        <h2>Pagamentos pendentes</h2>
+        <div className="cpf-buscar-container">
+            <TextInput
+            placeholder="Digite seu CPF"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+            />
+            <Button onClick={handleBuscar}>Buscar recibos</Button>
+        </div>
 
       {erro && <p className="pagamentos-erro">{erro}</p>}
       {mensagem && <p className="pagamentos-mensagem">{mensagem}</p>}

@@ -78,7 +78,7 @@ export default function MinhaReserva() {
 
     return (
         <div className="minha-reserva-container">
-            <h2>Consultar Reservas por CPF</h2>
+            <h2>Consultar minhas reservas</h2>
             <div className="minha-reserva-input-row">
                 <TextInput
                     placeholder="Digite seu CPF"

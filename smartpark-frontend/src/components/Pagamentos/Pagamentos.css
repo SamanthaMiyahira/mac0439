@@ -1,18 +1,73 @@
 .pagamentos-container {
-  padding: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px 20px;
+  border: 1px solid #1976d2;
+  border-radius: 8px;
+  background: #f7fafd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.pagamentos-container h2 {
+  text-align: center;
+  color: #1976d2;
 }
 
 .pagamento-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  padding: 16px 14px;
   margin: 10px 0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.pagamento-card p {
+  margin: 5px 0;
+}
+
+.pagamento-card button {
+  margin-right: 8px;
+  margin-top: 7px;
 }
 
 .pagamentos-erro {
   color: red;
+  text-align: center;
 }
 
 .pagamentos-mensagem {
   color: green;
+  text-align: center;
+}
+
+.cpf-buscar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.cpf-buscar-container input {
+  padding: 7px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 250px;
+}
+
+.cpf-buscar-container button {
+  padding: 7px 16px;
+  border-radius: 4px;
+  border: 1px solid #1976d2;
+  background-color: #1976d2;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.cpf-buscar-container button:hover {
+  background-color: #0f4a8c;
 }
