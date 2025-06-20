@@ -120,6 +120,32 @@ export async function atualizarStatusEvento(eventoId, status) {
   return response.json();
 }
 
+export async function listarRecibosPendentes(cpf) {
+  const response = await fetch(`${API}/recibos/pendentes/${cpf}/`);
+  if (!response.ok) {
+    throw new Error('Erro ao buscar recibos pendentes');
+  }
+  return response.json();
+}
+
+export async function pagarRecibo({ cpf, recibo_id, metodo_pagamento }) {
+  const response = await fetch(`${API}/recibos/pagar/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cpf, recibo_id, metodo_pagamento }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.erro || 'Erro ao pagar recibo');
+  }
+
+  return data;
+}
+
+
+
 
 
 

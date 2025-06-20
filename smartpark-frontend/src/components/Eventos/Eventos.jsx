@@ -32,7 +32,6 @@ export default function Eventos() {
     try {
       await atualizarStatusEvento(id, status);
       setMensagem(`Evento ${status} com sucesso.`);
-      // Atualiza localmente
       setEventos(oldEventos =>
         oldEventos.map(ev =>
           ev._id === id ? { ...ev, metadata: { ...ev.metadata, status } } : ev

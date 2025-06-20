@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from bson import ObjectId
 from ..services.recibo import listar_recibos_pendentes, pagar_recibo
+from django.http import JsonResponse
+from api.utils.mongo_utils import get_mongo_db
 
 @api_view(['GET'])
 def listar_recibos_pendentes_view(request, cpf):
@@ -28,3 +30,11 @@ def pagar_recibo_view(request):
             return Response({'erro': 'Recibo não encontrado ou já pago.'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({'erro': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def listar_recibos_pagos(request, cpf):
+    db = get_mongo_db()
+    recibos = list(db.recibos.find({"visitante.cpf": cpf, "status": "pago"}))
+    for r in recibos:
+        r["_id"] = str(r["_id"])  
+    return JsonResponse(recibos, safe=False)

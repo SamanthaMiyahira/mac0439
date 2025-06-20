@@ -5,6 +5,7 @@ import MinhaReserva from './components/MinhaReserva/MinhaReserva';
 import Button from './components/Button/Button';
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import Eventos from './components/Eventos/Eventos';
+import Pagamentos from './components/Pagamentos/Pagamentos';
 
 export default function App() {
   const [tela, setTela] = useState('reserva');
@@ -17,6 +18,7 @@ export default function App() {
         <Button onClick={() => setTela('minha')}>Minhas reservas</Button>
         <Button onClick={() => setTela('evento')}>Criar evento</Button>
         <Button onClick={() => setTela('eventos')}>Eventos</Button>
+        <Button onClick={() => setTela('pagamentos')}>Pagamentos</Button>
       </nav>
 
       <main>
@@ -24,6 +26,7 @@ export default function App() {
         {tela === 'minha' && <MinhaReserva idReserva={idReserva} />}
         {tela === 'evento' && <CriarEvento />}
         {tela === 'eventos' && <Eventos />}
+        {tela === 'pagamentos' && <Pagamentos />}
       </main>
     </div>
   );
