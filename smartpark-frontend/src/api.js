@@ -144,6 +144,23 @@ export async function pagarRecibo({ cpf, recibo_id, metodo_pagamento }) {
   return data;
 }
 
+export async function buscarFilaEsperaPorCpf(cpf) {
+  const cpfEncoded = encodeURIComponent(cpf);
+  const res = await fetch(`${API}/fila-espera/${cpfEncoded}/`);
+
+  if (res.status === 404) {
+    // Usuário ou fila não encontrada: retorna lista vazia
+    return [];
+  }
+
+  if (!res.ok) {
+    throw new Error('Erro ao buscar fila de espera');
+  }
+
+  return res.json();
+}
+
+
 
 
 

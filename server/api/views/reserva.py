@@ -7,6 +7,8 @@ from api.services.reserva import criar_reserva, liberar_vaga_e_alocar_fila
 from django.utils import timezone
 from api.services.incidente import incidente_acesso_nao_autorizado, incidente_tempo_excedido, incidente_tentativa_fraude
 from api.serializers.reserva import ReservaDetalhesSerializer
+from django.http import JsonResponse
+from api.models import Usuario, FilaDeEspera
 
 @api_view(['POST'])
 def criar_reserva_view(request):
@@ -148,3 +150,24 @@ def reservas_por_cpf_view(request, cpf):
         return Response(serializer.data)
     except Exception as e:
         return Response({'erro': 'Erro ao buscar reserva'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def consultar_fila_espera_por_cpf_view(request, cpf):
+    try:
+        usuario = Usuario.objects.get(cpf=cpf)
+    except Usuario.DoesNotExist:
+        return JsonResponse({"erro": "Usuário não encontrado"}, status=404)
+
+    filas = FilaDeEspera.objects.filter(usuario=usuario).order_by('-prioridade', 'data_hora')
+
+    dados = [{
+        "id": f.id,
+        "prioridade": f.prioridade,
+        "data_hora": f.data_hora.isoformat(),
+        "data_reserva": f.data_reserva.isoformat() if f.data_reserva else None,
+        "status": f.status,
+        "reserva_id": f.reserva.id if f.reserva else None
+    } for f in filas]
+
+    return JsonResponse(dados, safe=False)
